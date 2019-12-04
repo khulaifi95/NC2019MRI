@@ -56,16 +56,17 @@ class MaskFunc:
         if len(shape) < 3:
             raise ValueError('Shape should have 3 or more dimensions')
 
-        self.rng.seed(seed)
-        num_cols = shape[-2]
+        self.rng.seed(seed)     # ensure the same mask is generated
+        num_cols = shape[-2]    # # of columns of the mask
 
+        # Randomly make a choice from inputs
         choice = self.rng.randint(0, len(self.accelerations))
         center_fraction = self.center_fractions[choice]
         acceleration = self.accelerations[choice]
 
         # Create the mask
-        num_low_freqs = int(round(num_cols * center_fraction))
-        prob = (num_cols / acceleration - num_low_freqs) / (num_cols - num_low_freqs)
+        num_low_freqs = int(round(num_cols * center_fraction))  # # of columns of center fractions that kept in the mask
+        prob = (num_cols / acceleration - num_low_freqs) / (num_cols - num_low_freqs)   # percentage of columns to be masked
         mask = self.rng.uniform(size=num_cols) < prob
         pad = (num_cols - num_low_freqs + 1) // 2
         mask[pad:pad + num_low_freqs] = True
