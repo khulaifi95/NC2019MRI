@@ -57,7 +57,7 @@ class MaskFunc:
             raise ValueError('Shape should have 3 or more dimensions')
 
         self.rng.seed(seed)     # ensure the same mask is generated
-        num_cols = shape[-2]    # # of columns of the mask
+        num_cols = shape[-2]    # number of columns of the mask
 
         # Randomly make a choice from inputs
         choice = self.rng.randint(0, len(self.accelerations))
@@ -65,11 +65,19 @@ class MaskFunc:
         acceleration = self.accelerations[choice]
 
         # Create the mask
-        num_low_freqs = int(round(num_cols * center_fraction))  # # of columns of center fractions that kept in the mask
+        num_low_freqs = int(round(num_cols * center_fraction))  # number of columns of center fractions that kept in the mask
         prob = (num_cols / acceleration - num_low_freqs) / (num_cols - num_low_freqs)   # percentage of columns to be masked
-        mask = self.rng.uniform(size=num_cols) < prob
-        pad = (num_cols - num_low_freqs + 1) // 2
-        mask[pad:pad + num_low_freqs] = True
+        mask = self.rng.uniform(size=num_cols) < prob   # return a boolean distribution
+        pad = (num_cols - num_low_freqs + 1) // 2   # padding needed on two sides
+        mask[pad:pad + num_low_freqs] = True    # don't mask the center fraction
+        # mask[pad:pad + num_low_freqs - 1] = True
+
+        # Solution to uncertainty of k-fold under-sampling strategy
+        num_low_freqs = int(round(num_cols * center_fraction))
+        prob = 1 / acceleration
+        pad = (num_cols - num_low_freqs - 1) // 2
+        mask_high = mask[:pad] + mask[pad + num_low_freqs + 1]
+
 
         # Reshape the mask
         mask_shape = [1 for _ in shape]
