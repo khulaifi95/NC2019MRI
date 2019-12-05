@@ -13,7 +13,7 @@ class MaskFunc:
            low-frequencies
         2. The other columns are selected uniformly at random with a probability equal to:
            prob = (N / acceleration - N_low_freqs) / (N - N_low_freqs).
-    This ensures that the expected number of columns selected is equal to (N / acceleration)
+    *This ensures that the expected number of columns selected is equal to (N / acceleration)*
 
     It is possible to use multiple center_fractions and accelerations, in which case one possible
     (center_fraction, acceleration) is chosen uniformly at random each time the MaskFunc object is
@@ -57,7 +57,7 @@ class MaskFunc:
             raise ValueError('Shape should have 3 or more dimensions')
 
         self.rng.seed(seed)     # ensure the same mask is generated
-        num_cols = shape[-2]    # number of columns of the mask
+        num_cols = shape[-2]    # number of columns of the mask; using -2 to double-check the shape
 
         # Randomly make a choice from inputs
         choice = self.rng.randint(0, len(self.accelerations))
@@ -69,19 +69,22 @@ class MaskFunc:
         prob = (num_cols / acceleration - num_low_freqs) / (num_cols - num_low_freqs)   # percentage of columns to be masked
         mask = self.rng.uniform(size=num_cols) < prob   # return a boolean distribution
         pad = (num_cols - num_low_freqs + 1) // 2   # padding needed on two sides
-        mask[pad:pad + num_low_freqs] = True    # don't mask the center fraction
+        mask[pad:pad + num_low_freqs] = True    # don't mask out the center fraction
         # mask[pad:pad + num_low_freqs - 1] = True
 
         # Solution to uncertainty of k-fold under-sampling strategy
-        num_low_freqs = int(round(num_cols * center_fraction))
-        prob = 1 / acceleration
-        pad = (num_cols - num_low_freqs - 1) // 2
-        mask_high = mask[:pad] + mask[pad + num_low_freqs + 1]
+        # num_low_freqs = int(round(num_cols * center_fraction))
+        # prob = (num_cols / acceleration - num_low_freqs) / (num_cols - num_low_freqs)
+        # pad = (num_cols - num_low_freqs + 1) // 2
+        # mask_high = self.rng.uniform(size=num_cols - num_low_freqs) < prob
+        # mask_low = np.full(num_low_freqs, True)
+        # mask = np.concatenate([mask_high[:pad], mask_low, mask_high[pad + num_low_freqs:]])
+
 
 
         # Reshape the mask
-        mask_shape = [1 for _ in shape]
-        mask_shape[-2] = num_cols
+        mask_shape = [1 for _ in shape] # return a array of 1 as input shape
+        mask_shape[-2] = num_cols   # ensure mask match the original length 
         mask = torch.from_numpy(mask.reshape(*mask_shape).astype(np.float32))
 
         return mask

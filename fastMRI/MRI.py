@@ -54,3 +54,8 @@ from functions.subsample import MaskFunc
 
 mask_func0 = MaskFunc(center_fractions=[0.08], accelerations=[4])
 mask_func1 = MaskFunc(center_fractions=[0.04], accelerations=[8])
+
+
+## Coursework main purpose:
+## We would like you to propose a machine/deep learning method that is 
+## able to recontruct high quality images using large acceleration rates.
