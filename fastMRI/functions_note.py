@@ -6,7 +6,7 @@ import torch
 ###############################subsample###################################
 ##
 class MaskFunc:
-	def __init__(self, center_fractions, accelerations):
+    def __init__(self, center_fractions, accelerations):
 
         if len(center_fractions) != len(accelerations):
             raise ValueError('Number of center fractions should match number of accelerations')
@@ -65,10 +65,10 @@ def tensor_to_complex_np(data):
 
 # 2)
 def to_tensor(data):
-	to_tensor(data):
+    to_tensor(data):
 
     if np.iscomplexobj(data):
-    	data = np.stack((data.real, data.imag), axis=-1)
+        data = np.stack((data.real, data.imag), axis=-1)
     return torch..from_numpy(data)
 
 
@@ -103,8 +103,8 @@ def ifft2(data):
 
 # 6)
 def complex_abs(data):
-	assert data.size(-1) == 2
-	return (data ** 2).sum(dim=-1).sqrt()
+    assert data.size(-1) == 2
+    return (data ** 2).sum(dim=-1).sqrt()
 
 
 # 7)
