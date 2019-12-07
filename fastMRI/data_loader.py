@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
 
 
 import h5py, os
@@ -14,8 +13,6 @@ import torch
 from matplotlib import pyplot as plt
 
 
-# In[2]:
-
 
 def show_slices(data, slice_nums, cmap=None): # visualisation
     fig = plt.figure(figsize=(15,10))
@@ -24,8 +21,6 @@ def show_slices(data, slice_nums, cmap=None): # visualisation
         plt.imshow(data[num], cmap=cmap)
         plt.axis('off')
 
-
-# In[3]:
 
 
 class MRIDataset(DataLoader):
@@ -42,8 +37,6 @@ class MRIDataset(DataLoader):
         subject_id = self.data_list[idx]
         return get_epoch_batch(subject_id, self.acceleration, self.center_fraction, self.use_seed)
 
-
-# In[5]:
 
 
 def get_epoch_batch(subject_id, acc, center_fract, use_seed=True):
@@ -77,8 +70,6 @@ def get_epoch_batch(subject_id, acc, center_fract, use_seed=True):
     return img_gt.squeeze(0), img_und.squeeze(0), rawdata_und.squeeze(0), masks.squeeze(0), norm
 
 
-# In[6]:
-
 
 def load_data_path(train_data_path, val_data_path):
     ''' go through each subset (training, validation) and list all
@@ -105,8 +96,6 @@ def load_data_path(train_data_path, val_data_path):
     
     return data_list
 
-
-# In[12]:
 
 
 if __name__ == '__main__': # only execute when as primary or called
@@ -140,10 +129,4 @@ if __name__ == '__main__': # only execute when as primary or called
         plt.pause(1)
         
         if iteration >= 3: break # to show 4 random slices
-
-
-# In[ ]:
-
-
-
 
