@@ -353,12 +353,12 @@ class UnetModel(nn.Module):
         return self.conv2(output)
 
 
-
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-model = UnetModel(in_chans=1, out_chans=1, chans=32, num_pool_layers=4, drop_prob=0.5).to(device)
-optimizer = optim.SGD(params=model.parameters(), lr=0.01)
-
 def train(epoch):
+    
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    model = UnetModel(in_chans=1, out_chans=1, chans=32, num_pool_layers=4, drop_prob=0.5).to(device)
+    optimizer = optim.SGD(params=model.parameters(), lr=0.01)
+    
     model.train()
     loss_count = []
     
