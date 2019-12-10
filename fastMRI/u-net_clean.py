@@ -371,8 +371,8 @@ class UnetModel(nn.Module):
 
 if __name__ == '__main__':
     
-    data_path_train = '/home/kevinxu/Documents/NC2019MRI/train'
-    data_path_val = '/home/kevinxu/Documents/NC2019MRI/train'
+    data_path_train = '/data/local/NC2019MRI/train'
+    data_path_val = '/data/local/NC2019MRI/train'
     data_list = load_data_path(data_path_train, data_path_val)
 
     acc = 8
@@ -410,19 +410,19 @@ if __name__ == '__main__':
                 loss.backward()
                 optimizer.step()
             
-                if iteration == 1 or iteration % 20 == 0:
+                if iteration == 1 or iteration % 100 == 0:
                     loss_train.append(loss)
                     print('Epoch {}, Iteration {}, Training loss {}'.
                           format(epoch, iteration, loss.item()))
 
-            torch.save(model.state_dict(), data_path_train + 'unet_log.pt')
+            torch.save(model.state_dict(), r'/home/students/zxx992/NC2019MRI/fastMRI/unet_train01.pt')
             
-        plt.figure('unet_loss')
-        plt.plot(loss_train,label='Loss')
-        plt.legend()
-        plt.show()
+       # plt.figure('unet_loss')
+       # plt.plot(loss_train,label='Loss')
+       # plt.legend()
+       # plt.show()
         
-    train(5)
+    train(50)
 
 
 # In[ ]:
