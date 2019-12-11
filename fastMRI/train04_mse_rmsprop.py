@@ -301,7 +301,7 @@ def ssim(gt, pred):
 
 
 def save_reconstructions(reconstructions, out_dir):
-]
+
     for fname, recons in reconstructions.items():
         subject_path = os.path.join(out_dir, fname)
         print(subject_path)
