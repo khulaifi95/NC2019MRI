@@ -496,4 +496,4 @@ if __name__ == '__main__':
     #val('unet_train03.pt')
     #train(50, 50, 'unet_train03-2.pt', 'unet_train03.pt')
     #val('unet_train03-2.pt')
-    train(100, 200, 'unet_train03-3.pt', module_log=None)
+    train(100, 200, 'unet_train03-3.pt', model_log=None)

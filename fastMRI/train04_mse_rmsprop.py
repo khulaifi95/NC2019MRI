@@ -495,4 +495,5 @@ if __name__ == '__main__':
     #train(50, 50, 'unet_train04.pt', model_log=None)
     #val('unet_train04.pt')
     #train(100, 100, 'unet_train04-2.pt', model_log='unet_train04.pt')
-    val('unet_train04-2.pt')
+    #val('unet_train04-2.pt')
+    train(100, 200, 'unet_train04-3.pt', model_log=None)
