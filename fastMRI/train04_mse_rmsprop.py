@@ -301,15 +301,7 @@ def ssim(gt, pred):
 
 
 def save_reconstructions(reconstructions, out_dir):
-    """
-    Saves the reconstructions from a model into h5 files that is appropriate for submission
-    to the leaderboard.
-    Args:
-        reconstructions (dict[str, np.array]): A dictionary mapping input filenames to
-            corresponding reconstructions (of shape num_slices x height x width).
-        out_dir (pathlib.Path): Path to the output directory where the reconstructions
-            should be saved.
-    """
+]
     for fname, recons in reconstructions.items():
         subject_path = os.path.join(out_dir, fname)
         print(subject_path)
@@ -472,7 +464,7 @@ def val(model_log):
 
 if __name__ == '__main__':
     
-    root = '/home/students/zxx992/NC2019MRI/fastMRI/'
+    root = '/home/students/zxx992/NC2019MRI/fastMRI/models/'
     data_path_train = '/data/local/NC2019MRI/train'
     data_path_val = '/data/local/NC2019MRI/train'
     data_list = load_data_path(data_path_train, data_path_val)
@@ -502,11 +494,5 @@ if __name__ == '__main__':
     
     #train(50, 50, 'unet_train04.pt', model_log=None)
     #val('unet_train04.pt')
-    #train(100, 100, 'unet_train04-2.pt', model_log='unet_train04.pt')
-
-# ### Iterable-style datasets <br/>
-# An iterable-style dataset is an instance of a subclass of IterableDataset that implements the __iter__() protocol, and represents an iterable over data samples. 
-# 
-# This type of datasets is particularly suitable for cases where random reads are expensive or even improbable, and where the batch size depends on the fetched data.
-# 
-# For example, such a dataset, when called **iter**(dataset), could return a stream of data reading from a database, a remote server, or even logs generated in real time.
+    train(100, 100, 'unet_train04-2.pt', model_log='unet_train04.pt')
+    #val('unet_train04-2.pt')
