@@ -426,6 +426,7 @@ def train(num_epochs, interval, model_save, model_log):
             optimizer.zero_grad()
             output = model(X)
             loss = F.l1_loss(output, Y)
+            train_loss += loss
             loss.backward()
             optimizer.step()
 
@@ -497,8 +498,8 @@ if __name__ == '__main__':
     
     optimizer = optim.SGD(params=model.parameters(), lr=0.01)
     
-    train(50, 50, 'unet_train02-2.pt', model_log='unet_train02.pt')
-
+    #train(50, 50, 'unet_train02-2.pt', model_log='unet_train02.pt')
+    #val('unet-train02.pt')
 
 # ### Iterable-style datasets <br/>
 # An iterable-style dataset is an instance of a subclass of IterableDataset that implements the __iter__() protocol, and represents an iterable over data samples. 

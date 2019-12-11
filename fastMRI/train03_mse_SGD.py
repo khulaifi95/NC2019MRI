@@ -501,6 +501,7 @@ if __name__ == '__main__':
     optimizer = optim.SGD(params=model.parameters(), lr=0.01)
     
     #train(50, 50, 'unet_train03.pt', model_log=None)
+    #val('unet_train03.pt')
     train(50, 50, 'unet_train03-2.pt', 'unet_train03.pt')
 
 # ### Iterable-style datasets <br/>
