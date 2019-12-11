@@ -490,9 +490,10 @@ if __name__ == '__main__':
     model = UnetModel(in_chans=1, out_chans=1, chans=32,
                         num_pool_layers=4, drop_prob=0.5).to(device)
     
-    optimizer = optim.Adam(params=model.parameters(), lr=0.001)
+    optimizer = optim.Adam(params=model.parameters(), lr=0.0001)
     
     #train(50, 50, 'unet_train05.pt', model_log=None)
     #val('unet_train05.pt')
     #train(100, 100, 'unet_train05-2.pt', model_log='unet_train05.pt')
-    val('unet_train05-2.pt')
+    #val('unet_train05-2.pt')
+    train(100, 200, 'unet_train05-3.pt', model_log=None)
