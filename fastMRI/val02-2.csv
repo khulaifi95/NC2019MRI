@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "train02_l1_SGD.py", line 468, in <module>
+    data_list = load_data_path(data_path_train, data_path_val)
+  File "train02_l1_SGD.py", line 216, in load_data_path
+    for fname in sorted(os.listdir(which_data_path)):
+FileNotFoundError: [Errno 2] No such file or directory: '/data/local/NC2019MRI/train'
