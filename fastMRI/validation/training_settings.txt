@@ -1,3 +1,5 @@
 1st round test : 1 ground test l1+SGD, epoch = 50
 2nd round test : 9 loss=[l1, mse, smooth], optimizer=[SGD, RMSprop, Adam], epoch = 100
 3rd round test : 9 lr *= 0.1 
+
+4, 7, 9

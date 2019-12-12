@@ -316,6 +316,7 @@ def save_reconstructions(reconstructions, out_dir):
 
 class ConvBlock(nn.Module):
 
+
     def __init__(self, in_chans, out_chans, drop_prob):
 
         super().__init__()
@@ -339,12 +340,13 @@ class ConvBlock(nn.Module):
 
         return self.layers(input)
 
-   # def __repr__(self):
-   #	return f'ConvBlock(in_chans={self.in_chans}, out_chans={self.out_chans}, ' \
-   #        f'drop_prob={self.drop_prob})'
+    def __repr__(self):
+        return f'ConvBlock(in_chans={self.in_chans}, out_chans={self.out_chans}, ' \
+            f'drop_prob={self.drop_prob})'
 
 
 class UnetModel(nn.Module):
+
 
     def __init__(self, in_chans, out_chans, chans, num_pool_layers, drop_prob):
 
@@ -370,7 +372,7 @@ class UnetModel(nn.Module):
         self.up_sample_layers += [ConvBlock(ch * 2, ch, drop_prob)]
         self.conv2 = nn.Sequential(
             nn.Conv2d(ch, ch // 2, kernel_size=1),
-            nn.Conv2d(ch // 2, out_chans, kernel_size=1), 
+            nn.Conv2d(ch // 2, out_chans, kernel_size=1),
             nn.Conv2d(out_chans, out_chans, kernel_size=1),
         )
 
@@ -378,7 +380,7 @@ class UnetModel(nn.Module):
 
         stack = []
         output = input
-
+        # Apply down-sampling layers
         for layer in self.down_sample_layers:
             output = layer(output)
             stack.append(output)
@@ -386,6 +388,7 @@ class UnetModel(nn.Module):
 
         output = self.conv(output)
 
+        # Apply up-sampling layers
         for layer in self.up_sample_layers:
             output = F.interpolate(output, scale_factor=2, mode='bilinear', align_corners=False)
             output = torch.cat([output, stack.pop()], dim=1)
@@ -424,8 +427,7 @@ def train(num_epochs, interval, model_save, model_log):
             optimizer.step()
 
             if iteration % interval == 0:
-                print('\nTrain Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.4f}'.format(epoch,
-                iteration, len(train_dataset),100. * iteration / len(train_dataset), loss.item()))
+                print(epoch,',', iteration,',', loss.item())
 
         train_loss /= len(train_dataset)
         print('\nTrain Epoch: {} Average training loss: {:.4f} \n'.format(epoch, train_loss))
@@ -490,10 +492,12 @@ if __name__ == '__main__':
     model = UnetModel(in_chans=1, out_chans=1, chans=32,
                         num_pool_layers=4, drop_prob=0.5).to(device)
     
-    optimizer = optim.RMSprop(params=model.parameters(), lr=0.001)
+    optimizer = optim.RMSprop(params=model.parameters(), lr=0.0001)
     
     #train(50, 50, 'unet_train04.pt', model_log=None)
     #val('unet_train04.pt')
     #train(100, 100, 'unet_train04-2.pt', model_log='unet_train04.pt')
     #val('unet_train04-2.pt')
-    train(100, 200, 'unet_train04-3.pt', model_log=None)
+    #train(100, 200, 'unet_train04-3.pt', model_log=None)
+    #val('unet_train04-3.pt')
+    train(20, 200, 'unet_train04-4.pt', model_log=None)
