@@ -479,42 +479,6 @@ def val(model_log):
     print('\nAverage loss: {:.4f} \nAverage SSIM: {:.4f}'.format(val_loss, val_ssim))
 
 
-# In[15]:
-
-
-### af=4
-
-
-# if __name__ == '__main__':
-    
-#     root = '/home/students/zxx992/NC2019MRI/fastMRI/models/'
-#     data_path_train = '/data/local/NC2019MRI/train'
-#     data_path_val = '/data/local/NC2019MRI/train'
-#     data_list = load_data_path(data_path_train, data_path_val)
-
-#     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        
-#     acc = 4
-#     cen_fract = 0.08 
-#     seed = False 
-#     num_batch = 1
-#     num_workers = 12
-    
-#     train_dataset = MRIDataset(data_list['train'], acceleration=acc, 
-#                     center_fraction=cen_fract, use_seed=seed)
-#     train_loader = DataLoader(train_dataset, shuffle=True, 
-#                     batch_size=num_batch, num_workers=num_workers)
-
-#     val_dataset = MRIDataset(data_list['val'], acceleration=acc, 
-#                     center_fraction=cen_fract, use_seed=seed)
-#     val_loader = DataLoader(val_dataset, shuffle=True, 
-#                     batch_size=num_batch, num_workers=num_workers) 
-    
-#     model = UnetModel(in_chans=1, out_chans=1, chans=32, # 64, 128
-#                         num_pool_layers=4, drop_prob=0.5).to(device)
-    
-#     optimizer = optim.RMSprop(params=model.parameters(), lr=0.001)
-
 
 # In[14]:
 
@@ -528,8 +492,10 @@ if __name__ == '__main__':
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         
-    acc = 8
-    cen_fract = 0.04 
+    #acc = 8
+    #cen_fract = 0.04 
+    acc =4
+    cen_fract = 0.08
     seed = False 
     num_batch = 1
     num_workers = 12
@@ -549,5 +515,5 @@ if __name__ == '__main__':
     
     optimizer = optim.RMSprop(params=model.parameters(), lr=0.001)
     
-    train(50, 200, 'unet_fix.pt', model_log=None)
-
+    #train(50, 200, 'unet_fix.pt', model_log=None)
+    val('unet_fix.pt')
