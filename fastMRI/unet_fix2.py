@@ -470,7 +470,7 @@ def val(model_log):
             result = result * std + mean
             
             norm = norm.unsqueeze(1).unsqueeze(2).to(device)
-            loss = mse_loss(result / norm, Y / norm, size_average=False)
+            loss = F.mse_loss(result / norm, Y / norm, size_average=False)
             val_loss.append(loss.item())
                       
             result, Y = result.cpu(), Y.cpu()
@@ -509,10 +509,12 @@ if __name__ == '__main__':
     val_loader = DataLoader(val_dataset, shuffle=True, 
                     batch_size=num_batch, num_workers=num_workers) 
     
-    model = UnetModel(in_chans=1, out_chans=1, chans=32, # 64, 128
+    model = UnetModel(in_chans=1, out_chans=1, chans=64, # 64, 128
                         num_pool_layers=4, drop_prob=0.5).to(device)
     
     optimizer = optim.RMSprop(params=model.parameters(), lr=0.001)
     
-    train(30, 100, 'unet_fix2.pt', model_log=None)
-
+    #train(30, 100, 'unet_fix2.pt', model_log=None)
+    #val('unet_fix2.pt')
+    #train(50, 100, 'unet_fix2-2.pt', model_log=None)
+    val('unet_fix2-2.pt')
