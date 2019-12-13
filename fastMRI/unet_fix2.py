@@ -517,4 +517,7 @@ if __name__ == '__main__':
     #train(30, 100, 'unet_fix2.pt', model_log=None)
     #val('unet_fix2.pt')
     #train(50, 100, 'unet_fix2-2.pt', model_log=None)
-    val('unet_fix2-2.pt')
+    #val('unet_fix2-2.pt')
+    #train(50, 100, 'unet_fix2-num_pool.pt', model_log=None)
+    #val('unet_fix2-num_pool.pt')
+    train(50, 100, 'unet_fix2-4.pt', 'unet_fix2-2.pt')
