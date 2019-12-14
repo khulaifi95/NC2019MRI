@@ -487,8 +487,8 @@ def val(model_log):
 if __name__ == '__main__':
     
     root = '/home/students/zxx992/NC2019MRI/fastMRI/models/'
-    data_path_train = '/data/local/NC2019MRI/train/'
-    data_path_val = '/data/local/NC2019MRI/train/'
+    data_path_train = '/run/media/zxx992/UBUNTU 18_0/NC2019MRI/train/'
+    data_path_val = '/run/media/zxx992/UBUNTU 18_0/NC2019MRI/val/'
     data_list = load_data_path(data_path_train, data_path_val)
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -509,10 +509,10 @@ if __name__ == '__main__':
     val_loader = DataLoader(val_dataset, shuffle=True, 
                     batch_size=num_batch, num_workers=num_workers) 
     
-    model = UnetModel(in_chans=1, out_chans=1, chans=64, # 64, 128
+    model = UnetModel(in_chans=1, out_chans=1, chans=32, # 64, 128
                         num_pool_layers=4, drop_prob=0.5).to(device)
     
-    optimizer = optim.RMSprop(params=model.parameters(), lr=0.001)
+    optimizer = optim.RMSprop(params=model.parameters(), lr=0.0001)
     
     #train(30, 100, 'unet_fix2.pt', model_log=None)
     #val('unet_fix2.pt')
@@ -520,4 +520,5 @@ if __name__ == '__main__':
     #val('unet_fix2-2.pt')
     #train(50, 100, 'unet_fix2-num_pool.pt', model_log=None)
     #val('unet_fix2-num_pool.pt')
-    train(50, 100, 'unet_fix2-4.pt', 'unet_fix2-2.pt')
+    #train(20, 100, 'unet_fix2-5_trainsplit.pt', model_log=None)
+    val('unet_fix2-5_trainsplit.pt')
